@@ -10,7 +10,7 @@ const Navbar = () => {
       <Link href="/" className="flex items-center gap-2">
         <Image src={Logo} alt="Job Marshal Logo" width={40} height={40} />
         <h1 className="text-2xl font-bold">
-          Job<span className="text-primary">Marshal</span>
+          Job<span className="text-primary">Spot</span>
         </h1>
       </Link>
 
