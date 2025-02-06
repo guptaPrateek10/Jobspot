@@ -1,3 +1,4 @@
+import { signIn } from "@/app/utils/auth";
 import Github from "../icons/Github";
 import Google from "../icons/Google";
 import { Button } from "../ui/button";
@@ -8,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { redirect } from "next/navigation";
+import { GeneralSubmitButtons } from "../general/SubmitButtons";
 
 export function LoginForm() {
   return (
@@ -22,14 +25,28 @@ export function LoginForm() {
         <CardContent>
           <div className="grid gap-6">
             <div className="flex flex-col gap-4">
-              <Button className="w-full" variant={"outline"}>
-                <Github />
-                Login with Github
-              </Button>
-              <Button className="w-full" variant={"outline"}>
-                <Google />
-                Login with Google
-              </Button>
+              <form
+                action={async () => {
+                  "use server";
+                  await signIn("github");
+                  redirect("/");
+                }}
+              >
+                <GeneralSubmitButtons
+                  text="Login with Github"
+                  width="w-full"
+                  variant={"outline"}
+                  icon={<Github />}
+                />
+              </form>
+              <form action="">
+                <GeneralSubmitButtons
+                  text="Login with Google"
+                  width="w-full"
+                  variant={"outline"}
+                  icon={<Google />}
+                />
+              </form>
             </div>
           </div>
         </CardContent>
