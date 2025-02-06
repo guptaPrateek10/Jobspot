@@ -1,7 +1,6 @@
-import { signIn } from "@/app/utils/auth";
+import { auth, signIn } from "@/app/utils/auth";
 import Github from "../icons/Github";
 import Google from "../icons/Google";
-import { Button } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -12,7 +11,11 @@ import {
 import { redirect } from "next/navigation";
 import { GeneralSubmitButtons } from "../general/SubmitButtons";
 
-export function LoginForm() {
+export async function LoginForm() {
+  const session = await auth();
+  if (session?.user) {
+    redirect("/");
+  }
   return (
     <div className="flex flex-col gap-6">
       <Card>
