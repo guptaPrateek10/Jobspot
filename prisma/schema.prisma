@@ -22,9 +22,50 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
+  userType            UserType?
+  onboardingCompleted Boolean   @default(false)
+
+  Company   Company?
+  JobSeeker JobSeeker?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserType {
+  COMPANY
+  JOB_SEEKER
+}
+
+model Company {
+  id String @id @default(uuid())
+
+  name     String
+  location String
+  about    String
+  logo     String
+  website  String
+  xAccount String?
+
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Company   Company[]
+  Account   Account[]
+}
+
+model JobSeeker {
+  id String @id @default(uuid())
+
+  name   String
+  about  String
+  resume String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -49,23 +90,6 @@ model Account {
   companyId String?
 
   @@id([provider, providerAccountId])
-}
-
-model Company {
-  id String @id @default(uuid())
-
-  name     String
-  location String
-  about    String
-  logo     String
-  website  String
-  xAccount String?
-  userId   String
-
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Account   Account[]
 }
 
 model Session {

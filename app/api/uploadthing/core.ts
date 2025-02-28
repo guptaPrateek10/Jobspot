@@ -1,5 +1,4 @@
 import { auth } from "@/app/utils/auth";
-import { requireUser } from "@/app/utils/requireUser";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 
@@ -17,7 +16,7 @@ export const ourFileRouter = {
     // Set permissions and file types for this FileRoute
     .middleware(async () => {
       // This code runs on your server before upload
-      const session = await requireUser();
+      const session = await auth();
 
       // If you throw, the user will not be able to upload
       if (!session?.user) throw new UploadThingError("Unauthorized");

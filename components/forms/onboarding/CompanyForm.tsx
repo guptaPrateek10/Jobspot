@@ -27,6 +27,7 @@ import { XIcon } from "lucide-react";
 import { UploadDropzone } from "@/components/general/UploadThingReExport";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { createCompany } from "@/app/action";
 export function CompanyForm() {
   const [pending, setPending] = useState<boolean>(false);
   const form = useForm<z.infer<typeof companySchema>>({
@@ -40,9 +41,24 @@ export function CompanyForm() {
       xAccount: "",
     },
   });
+
+  async function onSubmit(data: z.infer<typeof companySchema>) {
+    console.log("data>>>>", data);
+    try {
+      setPending(true);
+      await createCompany(data);
+    } catch (error) {
+      console.log("error>>>>>>>>>>>>", error);
+      if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
+      }
+      console.log("Something went wrong", error);
+    } finally {
+      setPending(false);
+    }
+  }
   return (
     <Form {...form}>
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}

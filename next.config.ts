@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         hostname: "utfs.io",
+        protocol: "https",
+        port: "",
       },
     ],
   },

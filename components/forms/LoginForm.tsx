@@ -32,7 +32,7 @@ export async function LoginForm() {
                 action={async () => {
                   "use server";
                   await signIn("github");
-                  redirect("/");
+                  redirect("/onboarding");
                 }}
               >
                 <GeneralSubmitButtons
@@ -46,6 +46,7 @@ export async function LoginForm() {
                 action={async () => {
                   "use server";
                   await signIn("google");
+                  redirect("/onboarding");
                 }}
               >
                 <GeneralSubmitButtons
