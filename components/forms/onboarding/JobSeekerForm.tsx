@@ -31,7 +31,6 @@ export function JobSeekerForm() {
   });
 
   async function onSubmit(data: z.infer<typeof jobSeekerSchema>) {
-    console.log("data>>>>", data);
     try {
       setPending(true);
       await createJobSeeker(data);

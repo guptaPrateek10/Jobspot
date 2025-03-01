@@ -31,8 +31,9 @@ export async function LoginForm() {
               <form
                 action={async () => {
                   "use server";
-                  await signIn("github");
-                  redirect("/onboarding");
+                  await signIn("github", {
+                    redirectTo: "/onboarding",
+                  });
                 }}
               >
                 <GeneralSubmitButtons
@@ -45,8 +46,9 @@ export async function LoginForm() {
               <form
                 action={async () => {
                   "use server";
-                  await signIn("google");
-                  redirect("/onboarding");
+                  await signIn("google", {
+                    redirectTo: "/onboarding",
+                  });
                 }}
               >
                 <GeneralSubmitButtons
