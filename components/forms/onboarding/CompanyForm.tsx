@@ -43,12 +43,10 @@ export function CompanyForm() {
   });
 
   async function onSubmit(data: z.infer<typeof companySchema>) {
-    console.log("data>>>>", data);
     try {
       setPending(true);
       await createCompany(data);
     } catch (error) {
-      console.log("error>>>>>>>>>>>>", error);
       if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
       }
       console.log("Something went wrong", error);
