@@ -33,6 +33,7 @@ import { XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { JobListingDurationSelector } from "../general/JobListingDurationSelector";
+import { createJob } from "@/app/action";
 interface CreateJobFormProps {
   companyName: string;
   companyLocation: string;
@@ -68,10 +69,21 @@ export function CreateJobForm({
       listingDuration: 30,
     },
   });
+
   const [pending, setPending] = useState(false);
 
   async function onSubmit(Values: z.infer<typeof jobSchema>) {
     console.log(Values);
+    try {
+      setPending(true);
+      await createJob(Values);
+    } catch (error) {
+      if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
+      }
+      console.log("Something went wrong", error);
+    } finally {
+      setPending(false);
+    }
   }
   return (
     <Form {...form}>
